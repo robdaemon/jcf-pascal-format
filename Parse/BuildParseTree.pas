@@ -1527,6 +1527,8 @@ begin
     RecogniseSimpleType; {RealTypes + OrdTypes}
   ttOpenBracket:
     RecogniseSimpleType; {enumerated types}
+  ttBitpacked:
+    RecogniseStrucType; // bitpacked can be applied to structured types (e.g. records)
   ttPacked:
     if lc2.TokenType = ttClass then
       RecogniseClassType
@@ -1807,6 +1809,8 @@ var
 begin
   // StrucType -> [PACKED] (ArrayType | SetType | FileType | RecType)
 
+  if fcTokenList.FirstSolidTokenType = ttBitpacked then
+    Recognise(ttBitpacked);
   if fcTokenList.FirstSolidTokenType = ttPacked then
     Recognise(ttPacked);
 
